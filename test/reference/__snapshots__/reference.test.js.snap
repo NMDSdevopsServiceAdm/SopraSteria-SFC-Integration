@@ -3483,3 +3483,195 @@ Object {
   ],
 }
 `;
+
+exports[`Expected reference services should fetch worker training categories 1`] = `
+Object {
+  "trainingCategories": Array [
+    Object {
+      "category": "Moving and Handling",
+      "id": 1,
+      "seq": 1,
+    },
+    Object {
+      "category": "Safeguarding Adults",
+      "id": 2,
+      "seq": 2,
+    },
+    Object {
+      "category": "Any other not in the above categories",
+      "id": 3,
+      "seq": 3,
+    },
+    Object {
+      "category": "Health and Safety",
+      "id": 4,
+      "seq": 4,
+    },
+    Object {
+      "category": "Fire safety",
+      "id": 5,
+      "seq": 5,
+    },
+    Object {
+      "category": "Food safety and catering",
+      "id": 6,
+      "seq": 6,
+    },
+    Object {
+      "category": "Infection Control",
+      "id": 7,
+      "seq": 7,
+    },
+    Object {
+      "category": "First Aid",
+      "id": 8,
+      "seq": 8,
+    },
+    Object {
+      "category": "Medication safe handling and awareness",
+      "id": 9,
+      "seq": 9,
+    },
+    Object {
+      "category": "Mental capacity and Deprivation of liberty",
+      "id": 10,
+      "seq": 10,
+    },
+    Object {
+      "category": "Dementia care",
+      "id": 11,
+      "seq": 11,
+    },
+    Object {
+      "category": "Equality, diversity and human rights training",
+      "id": 12,
+      "seq": 12,
+    },
+    Object {
+      "category": "Dignity, Respect, Person Centred care",
+      "id": 13,
+      "seq": 13,
+    },
+    Object {
+      "category": "Nutrition and hydration",
+      "id": 14,
+      "seq": 14,
+    },
+    Object {
+      "category": "Palliative or end of life care",
+      "id": 15,
+      "seq": 15,
+    },
+    Object {
+      "category": "Positive behaviour and support",
+      "id": 16,
+      "seq": 16,
+    },
+    Object {
+      "category": "Emergency Aid awareness",
+      "id": 17,
+      "seq": 17,
+    },
+    Object {
+      "category": "Control and restraint",
+      "id": 18,
+      "seq": 18,
+    },
+    Object {
+      "category": "Learning disability",
+      "id": 19,
+      "seq": 19,
+    },
+    Object {
+      "category": "Leadership & Management",
+      "id": 20,
+      "seq": 20,
+    },
+    Object {
+      "category": "Physical Disability",
+      "id": 21,
+      "seq": 21,
+    },
+    Object {
+      "category": "Confidentiality/GDPR",
+      "id": 22,
+      "seq": 22,
+    },
+    Object {
+      "category": "Epilepsy",
+      "id": 23,
+      "seq": 23,
+    },
+    Object {
+      "category": "Communication skills",
+      "id": 24,
+      "seq": 24,
+    },
+    Object {
+      "category": "Diabetes",
+      "id": 25,
+      "seq": 25,
+    },
+    Object {
+      "category": "Coshh",
+      "id": 26,
+      "seq": 26,
+    },
+    Object {
+      "category": "Mental health",
+      "id": 27,
+      "seq": 27,
+    },
+    Object {
+      "category": "Autism",
+      "id": 28,
+      "seq": 28,
+    },
+    Object {
+      "category": "Continence Care",
+      "id": 29,
+      "seq": 29,
+    },
+    Object {
+      "category": "Duty of care",
+      "id": 30,
+      "seq": 30,
+    },
+    Object {
+      "category": "Supervision / Performance management",
+      "id": 31,
+      "seq": 31,
+    },
+    Object {
+      "category": "Stroke",
+      "id": 32,
+      "seq": 32,
+    },
+    Object {
+      "category": "Complaints handling/conflict resolution",
+      "id": 33,
+      "seq": 33,
+    },
+    Object {
+      "category": "Personal Care",
+      "id": 34,
+      "seq": 34,
+    },
+    Object {
+      "category": "Activity provision/Well-being",
+      "id": 35,
+      "seq": 35,
+    },
+    Object {
+      "category": "Sensory disability",
+      "id": 36,
+      "seq": 36,
+    },
+    Object {
+      "category": "Childrens / young people's related training",
+      "id": 37,
+      "seq": 37,
+    },
+  ],
+}
+`;

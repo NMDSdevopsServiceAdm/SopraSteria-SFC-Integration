@@ -107,4 +107,11 @@ describe ("Expected reference services", async () => {
             .expect(200);
         expect(serviceUsers.body).toMatchSnapshot();
     });
+
+    it("should fetch worker training categories", async () => {
+        const serviceUsers = await apiEndpoint.get('/trainingCategories')
+            .expect('Content-Type', /json/)
+            .expect(200);
+        expect(serviceUsers.body).toMatchSnapshot();
+    });
 });
