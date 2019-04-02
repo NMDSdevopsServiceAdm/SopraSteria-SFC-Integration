@@ -3153,67 +3153,10 @@ Object {
 `;
 
 exports[`Expected reference services should fetch service users 1`] = `
-Object {
-  "serviceUsers": Object {
-    "Adults": Array [
-      Object {
-        "id": 10,
-        "service": "Adults with dementia",
-      },
-      Object {
-        "id": 11,
-        "service": "Adults with mental disorders or infirmities, excluding learning disability or dementia",
-      },
-      Object {
-        "id": 12,
-        "service": "Adults detained under the Mental Health Act",
-      },
-      Object {
-        "id": 13,
-        "service": "Adults with learning disabilities and/or autism",
-      },
-      Object {
-        "id": 14,
-        "service": "Adults with physical disabilities",
-      },
-      Object {
-        "id": 15,
-        "service": "Adults with sensory impairments",
-      },
-      Object {
-        "id": 16,
-        "service": "Adults who misuse alcohol/drugs",
-      },
-      Object {
-        "id": 17,
-        "service": "Adults with an eating disorder",
-      },
-      Object {
-        "id": 18,
-        "service": "Adults not in above categories",
-      },
-    ],
-    "Carers": Array [
-      Object {
-        "id": 20,
-        "service": "Carers of older people",
-      },
-      Object {
-        "id": 21,
-        "service": "Carers of adults",
-      },
-      Object {
-        "id": 22,
-        "service": "Carers of children and young people",
-      },
-    ],
-    "Children and young people": Array [
-      Object {
-        "id": 19,
-        "service": "Any children and young people",
-      },
-    ],
-    "Older people": Array [
+Array [
+  Object {
+    "group": "Older people",
+    "services": Array [
       Object {
         "id": 1,
         "service": "Older people with dementia",
@@ -3251,14 +3194,84 @@ Object {
         "service": "Older people not in above categories",
       },
     ],
-    "Other": Array [
+  },
+  Object {
+    "group": "Adults",
+    "services": Array [
+      Object {
+        "id": 10,
+        "service": "Adults with dementia",
+      },
+      Object {
+        "id": 11,
+        "service": "Adults with mental disorders or infirmities, excluding learning disability or dementia",
+      },
+      Object {
+        "id": 12,
+        "service": "Adults detained under the Mental Health Act",
+      },
+      Object {
+        "id": 13,
+        "service": "Adults with learning disabilities and/or autism",
+      },
+      Object {
+        "id": 14,
+        "service": "Adults with physical disabilities",
+      },
+      Object {
+        "id": 15,
+        "service": "Adults with sensory impairments",
+      },
+      Object {
+        "id": 16,
+        "service": "Adults who misuse alcohol/drugs",
+      },
+      Object {
+        "id": 17,
+        "service": "Adults with an eating disorder",
+      },
+      Object {
+        "id": 18,
+        "service": "Adults not in above categories",
+      },
+    ],
+  },
+  Object {
+    "group": "Children and young people",
+    "services": Array [
+      Object {
+        "id": 19,
+        "service": "Any children and young people",
+      },
+    ],
+  },
+  Object {
+    "group": "Carers",
+    "services": Array [
+      Object {
+        "id": 20,
+        "service": "Carers of older people",
+      },
+      Object {
+        "id": 21,
+        "service": "Carers of adults",
+      },
+      Object {
+        "id": 22,
+        "service": "Carers of children and young people",
+      },
+    ],
+  },
+  Object {
+    "group": "Other",
+    "services": Array [
       Object {
         "id": 23,
         "service": "Any others not in above categories",
       },
     ],
   },
-}
+]
 `;
 
 exports[`Expected reference services should fetch services 1`] = `
