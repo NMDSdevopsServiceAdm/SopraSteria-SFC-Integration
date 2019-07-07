@@ -112,7 +112,6 @@ describe("establishment", () => {
             expect(loginResponse.body.establishment).not.toHaveProperty('parentUid');
             expect(loginResponse.body.establishment.isRegulated).toEqual(false);
             expect(nmdsIdRegex.test(loginResponse.body.establishment.nmdsId)).toEqual(true);
-            expect(loginResponse.body.isFirstLogin).toEqual(true);
             expect(Number.isInteger(loginResponse.body.mainService.id)).toEqual(true);
             expect(loginResponse.body.lastLoggedIn).toBeNull();
 
@@ -129,7 +128,6 @@ describe("establishment", () => {
             const lastLoggedInDate = new Date(secondLoginResponse.body.lastLoggedIn);
             expect(lastLoggedInDate.toISOString()).toEqual(secondLoginResponse.body.lastLoggedIn);
             
-            expect(secondLoginResponse.body.isFirstLogin).toEqual(false);
             expect(secondLoginResponse.body.establishment.name).toEqual(site.locationName);
             expect(secondLoginResponse.body.mainService.name).toEqual(site.mainService);
 

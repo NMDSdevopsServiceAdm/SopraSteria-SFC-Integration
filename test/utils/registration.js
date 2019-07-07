@@ -17,7 +17,7 @@ exports.newCqcSite = (location, cqcServices) => {
             "jobTitle": "Integration Tester",
             "emailAddress": faker.internet.email(),
             "contactNumber": faker.phone.phoneNumber('01#########'),
-            "username": faker.internet.userName(),
+            "username": faker.internet.userName().replace('.', '_'),
             "password": "Password00",
             "securityQuestion": faker.lorem.words(2),
             "securityAnswer": faker.lorem.words(4)
@@ -40,7 +40,7 @@ exports.newNonCqcSite = (postcode, nonCqcServices) => {
             "jobTitle": "Integration Tester",
             "emailAddress": faker.internet.email(),
             "contactNumber": faker.phone.phoneNumber('01#########'),
-            "username": faker.internet.userName(),
+            "username": faker.internet.userName().replace('.', '_'),
             "password": "Password00",
             "securityQuestion": faker.lorem.words(2),
             "securityAnswer": faker.lorem.words(4)
