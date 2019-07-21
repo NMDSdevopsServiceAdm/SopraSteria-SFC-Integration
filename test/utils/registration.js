@@ -15,12 +15,12 @@ exports.newCqcSite = (location, cqcServices) => {
         "user": {
             "fullname": faker.name.findName(),
             "jobTitle": "Integration Tester",
-            "emailAddress": faker.internet.email(),
-            "contactNumber": faker.phone.phoneNumber('01#########'),
+            "email": faker.internet.email(),
+            "phone": faker.phone.phoneNumber('01#########'),
             "username": faker.internet.userName().replace('.', '_'),
             "password": "Password00",
             "securityQuestion": faker.lorem.words(2),
-            "securityAnswer": faker.lorem.words(4)
+            "securityQuestionAnswer": faker.lorem.words(4)
         }
     };
 };
@@ -38,12 +38,12 @@ exports.newNonCqcSite = (postcode, nonCqcServices) => {
         "user": {
             "fullname": faker.name.findName(),
             "jobTitle": "Integration Tester",
-            "emailAddress": faker.internet.email(),
-            "contactNumber": faker.phone.phoneNumber('01#########'),
+            "email": faker.internet.email(),
+            "phone": faker.phone.phoneNumber('01#########'),
             "username": faker.internet.userName().replace('.', '_'),
             "password": "Password00",
             "securityQuestion": faker.lorem.words(2),
-            "securityAnswer": faker.lorem.words(4)
+            "securityQuestionAnswer": faker.lorem.words(4)
         }
     };
 };

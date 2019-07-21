@@ -60,12 +60,12 @@ describe("Registrations", () => {
     //             user: {
     //                 fullname: "Warren Ayling",
     //                 jobTitle: "Backend Nurse",
-    //                 emailAddress: "bob@bob.com",
-    //                 contactNumber: "01111 111111",
+    //                 email: "bob@bob.com",
+    //                 phone: "01111 111111",
     //                 username: "aylingw",
     //                 password: "Password00",
     //                 securityQuestion: "What is dinner?",
-    //                 securityAnswer: "All Day"
+    //                 securityQuestionAnswer: "All Day"
     //             }
     //         }])
     //         .expect('Content-Type', /json/)
@@ -88,12 +88,12 @@ describe("Registrations", () => {
     //             user: {
     //                 fullname: "Warren Ayling",
     //                 jobTitle: "Backend Nurse",
-    //                 emailAddress: "bob@bob.com",
-    //                 contactNumber: "01111 111111",
+    //                 email: "bob@bob.com",
+    //                 phone: "01111 111111",
     //                 username: "aylingw",
     //                 password: "Password00",
     //                 securityQuestion: "What is dinner?",
-    //                 securityAnswer: "All Day"
+    //                 securityQuestionAnswer: "All Day"
     //             }
     //         }])
     //         .expect('Content-Type', /json/)
@@ -212,12 +212,12 @@ describe("Registrations", () => {
             .expect(404);
     });
     it("should lookup a known email via usernameOrPasswword with success", async () => {
-        const knownEmail = nonCQCSite.user.emailAddress;
+        const knownEmail = nonCQCSite.user.email;
         await apiEndpoint.get('/registration/usernameOrEmail/' + encodeURIComponent(knownEmail))
             .expect(200);
     });
     it("should lookup an unknown email via usernameOrPasswword with not found", async () => {
-        const unknownEmail = nonCQCSite.user.emailAddress + 'A';
+        const unknownEmail = nonCQCSite.user.email + 'A';
         await apiEndpoint.get('/registration/usernameOrEmail/' + encodeURIComponent(unknownEmail))
             .expect(404);
     });

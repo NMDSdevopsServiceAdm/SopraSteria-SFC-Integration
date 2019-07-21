@@ -73,12 +73,12 @@ describe("Password Resets", () => {
             .expect(404);
     });
     it("should lookup a known email via usernameOrPasswword with success", async () => {
-        const knownEmail = nonCQCSite.user.emailAddress;
+        const knownEmail = nonCQCSite.user.email;
         await apiEndpoint.get('/registration/usernameOrEmail/' + encodeURIComponent(knownEmail))
             .expect(200);
     });
     it("should lookup an unknown email via usernameOrPasswword with not found", async () => {
-        const unknownEmail = nonCQCSite.user.emailAddress + 'A';
+        const unknownEmail = nonCQCSite.user.email + 'A';
         await apiEndpoint.get('/registration/usernameOrEmail/' + encodeURIComponent(unknownEmail))
             .expect(404);
     });
@@ -113,7 +113,7 @@ describe("Password Resets", () => {
     it("should succeed to request reset on known email", async () => {
         const response = await apiEndpoint.post('/registration/requestPasswordReset')
             .send({
-                usernameOrEmail: nonCQCSite.user.emailAddress,
+                usernameOrEmail: nonCQCSite.user.email,
                 ttl: 10
             })
             // .expect('Content-Type', /json/)
@@ -148,12 +148,12 @@ describe("Password Resets", () => {
     it("should fail on expired token when validating password reset", async () => {
         const reqResponse = await apiEndpoint.post('/registration/requestPasswordReset')
             .send({
-                usernameOrEmail: nonCQCSite.user.emailAddress,
+                usernameOrEmail: nonCQCSite.user.email,
                 ttl: -10
             })
             .expect('Content-Type', /json/)
             .expect(200);
-    
+
         const resetUuid = reqResponse.body.uuid;
         const validateResponse = await apiEndpoint.post('/registration/validateResetPassword')
             .send({
@@ -166,12 +166,12 @@ describe("Password Resets", () => {
     it("should return JWT on Authorization header on successfull validating password reset", async () => {
         const reqResponse = await apiEndpoint.post('/registration/requestPasswordReset')
             .send({
-                usernameOrEmail: nonCQCSite.user.emailAddress,
+                usernameOrEmail: nonCQCSite.user.email,
                 ttl: 100
             })
             .expect('Content-Type', /json/)
             .expect(200);
-    
+
         successfulUuid = reqResponse.body.uuid;
         const validateResponse = await apiEndpoint.post('/registration/validateResetPassword')
             .send({
@@ -221,7 +221,7 @@ describe("Password Resets", () => {
             })
             .expect(403);
     });
-    
+
     it("should fail on reset password if no password given", async () => {
         await apiEndpoint.post('/user/resetPassword')
             .set('Authorization', successfullToken)
@@ -417,7 +417,7 @@ describe("Change User Details", () => {
             .expect(200);
         establishmentId = loginResponse.body.establishment.id;
         establishmentUid = loginResponse.body.establishment.uid;
-        
+
         loginAuthToken = loginResponse.header.authorization;
         const allUsersResponse = await apiEndpoint.get(`/user/establishment/${establishmentUid}`)
             .set('Authorization', loginAuthToken)
@@ -458,7 +458,7 @@ describe("Change User Details", () => {
         expect(knownUserUid).not.toBeNull();
         expect(loginAuthToken).not.toBeNull();
         expect(establishmentId).not.toBeNull();
-        
+
         const getUserResponse = await apiEndpoint.get(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}?history=none`)
             .set('Authorization', loginAuthToken)
             .send({
@@ -471,10 +471,10 @@ describe("Change User Details", () => {
         expect(getUserResponse.body.updated).toEqual(new Date(getUserResponse.body.updated).toISOString());
         expect(getUserResponse.body.fullname).toEqual(nonCQCSite.user.fullname);
         expect(getUserResponse.body.jobTitle).toEqual(nonCQCSite.user.jobTitle);
-        expect(getUserResponse.body.email).toEqual(nonCQCSite.user.emailAddress.toLowerCase());
-        expect(getUserResponse.body.phone).toEqual(nonCQCSite.user.contactNumber);
+        expect(getUserResponse.body.email).toEqual(nonCQCSite.user.email.toLowerCase());
+        expect(getUserResponse.body.phone).toEqual(nonCQCSite.user.phone);
         expect(getUserResponse.body.securityQuestion).toEqual(nonCQCSite.user.securityQuestion);
-        expect(getUserResponse.body.securityQuestionAnswer).toEqual(nonCQCSite.user.securityAnswer);
+        expect(getUserResponse.body.securityQuestionAnswer).toEqual(nonCQCSite.user.securityQuestionAnswer);
         expect(getUserResponse.body.updatedBy).toEqual(nonCQCSite.user.username.toLowerCase());
 
 
@@ -513,10 +513,10 @@ describe("Change User Details", () => {
         expect(getUserResponse.body.updated).toEqual(new Date(getUserResponse.body.updated).toISOString());
         expect(getUserResponse.body.fullname).toEqual(nonCQCSite.user.fullname);
         expect(getUserResponse.body.jobTitle).toEqual(nonCQCSite.user.jobTitle);
-        expect(getUserResponse.body.email).toEqual(nonCQCSite.user.emailAddress.toLowerCase());
-        expect(getUserResponse.body.phone).toEqual(nonCQCSite.user.contactNumber);
+        expect(getUserResponse.body.email).toEqual(nonCQCSite.user.email.toLowerCase());
+        expect(getUserResponse.body.phone).toEqual(nonCQCSite.user.phone);
         expect(getUserResponse.body.securityQuestion).toEqual(nonCQCSite.user.securityQuestion);
-        expect(getUserResponse.body.securityQuestionAnswer).toEqual(nonCQCSite.user.securityAnswer);
+        expect(getUserResponse.body.securityQuestionAnswer).toEqual(nonCQCSite.user.securityQuestionAnswer);
 
         // and now expected errors
         await apiEndpoint.get(`/user/establishment/${establishmentUid}/${encodeURIComponent('unknown user')}?history=none`)
@@ -566,14 +566,14 @@ describe("Change User Details", () => {
             lastChanged: new Date(getUserResponse.body.jobTitle.lastChanged).toISOString()
         });
         expect(getUserResponse.body.email).toEqual({
-            currentValue: nonCQCSite.user.emailAddress.toLowerCase(),
+            currentValue: nonCQCSite.user.email.toLowerCase(),
             lastSavedBy: nonCQCSite.user.username.toLowerCase(),
             lastChangedBy: nonCQCSite.user.username.toLowerCase(),
             lastSaved: new Date(getUserResponse.body.email.lastSaved).toISOString(),
             lastChanged: new Date(getUserResponse.body.email.lastChanged).toISOString()
         });
         expect(getUserResponse.body.phone).toEqual({
-            currentValue: nonCQCSite.user.contactNumber,
+            currentValue: nonCQCSite.user.phone,
             lastSavedBy: nonCQCSite.user.username.toLowerCase(),
             lastChangedBy: nonCQCSite.user.username.toLowerCase(),
             lastSaved: new Date(getUserResponse.body.phone.lastSaved).toISOString(),
@@ -587,7 +587,7 @@ describe("Change User Details", () => {
             lastChanged: new Date(getUserResponse.body.securityQuestion.lastChanged).toISOString()
         });
         expect(getUserResponse.body.securityQuestionAnswer).toEqual({
-            currentValue: nonCQCSite.user.securityAnswer,
+            currentValue: nonCQCSite.user.securityQuestionAnswer,
             lastSavedBy: nonCQCSite.user.username.toLowerCase(),
             lastChangedBy: nonCQCSite.user.username.toLowerCase(),
             lastSaved: new Date(getUserResponse.body.securityQuestionAnswer.lastSaved).toISOString(),
@@ -646,7 +646,7 @@ describe("Change User Details", () => {
             },
             6);
         let lastSavedDate = userChangeHistory.body.fullname.lastSaved;
-        
+
         // now update the property but with same value - expect no change
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
@@ -686,7 +686,7 @@ describe("Change User Details", () => {
                 "fullname" : nonCQCSite.user.fullname
             })
             .expect(404);
-    
+
         // exceeds maximum length
         const randomFullname = randomString(121);
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
@@ -696,7 +696,7 @@ describe("Change User Details", () => {
             })
             .expect(400);
     });
- 
+
     it('should update job title property', async () => {
         const updatedJobTitleResponse = await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
@@ -748,7 +748,7 @@ describe("Change User Details", () => {
             },
             6);
         let lastSavedDate = userChangeHistory.body.jobTitle.lastSaved;
-        
+
         // now update the property but with same value - expect no change
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
@@ -803,7 +803,7 @@ describe("Change User Details", () => {
         const updatedEmailResponse = await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "email" : 'updated.' + nonCQCSite.user.emailAddress
+                "email" : 'updated.' + nonCQCSite.user.email
             })
             .expect('Content-Type', /json/)
             .expect(200);
@@ -812,14 +812,14 @@ describe("Change User Details", () => {
         expect(updatedEmailResponse.body.created).toEqual(new Date(updatedEmailResponse.body.created).toISOString());
         expect(updatedEmailResponse.body.updated).toEqual(new Date(updatedEmailResponse.body.updated).toISOString());
         expect(updatedEmailResponse.body.updatedBy).toEqual(nonCQCSite.user.username.toLowerCase());
-        expect(updatedEmailResponse.body.email).toEqual('updated.' + nonCQCSite.user.emailAddress.toLowerCase());
+        expect(updatedEmailResponse.body.email).toEqual('updated.' + nonCQCSite.user.email.toLowerCase());
 
         //validatePropertyChangeHistory
         // and now check change history
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "email" : 'updated.again.' + nonCQCSite.user.emailAddress
+                "email" : 'updated.again.' + nonCQCSite.user.email
             })
             .expect('Content-Type', /json/)
             .expect(200);
@@ -841,8 +841,8 @@ describe("Change User Details", () => {
             'email',
             PropertiesResponses,
             userChangeHistory.body.email,
-            'updated.again.' + nonCQCSite.user.emailAddress.toLowerCase(),
-            'updated.' + nonCQCSite.user.emailAddress.toLowerCase(),
+            'updated.again.' + nonCQCSite.user.email.toLowerCase(),
+            'updated.' + nonCQCSite.user.email.toLowerCase(),
             nonCQCSite.user.username,
             requestEpoch,
             (ref, given) => {
@@ -850,12 +850,12 @@ describe("Change User Details", () => {
             },
             6);
         let lastSavedDate = userChangeHistory.body.email.lastSaved;
-        
+
         // now update the property but with same value - expect no change
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "email" : 'updated.again.' + nonCQCSite.user.emailAddress
+                "email" : 'updated.again.' + nonCQCSite.user.email
             })
             .expect('Content-Type', /json/)
             .expect(200);
@@ -863,7 +863,7 @@ describe("Change User Details", () => {
             .set('Authorization', loginAuthToken)
             .expect('Content-Type', /json/)
             .expect(200);
-        expect(userChangeHistory.body.email.currentValue).toEqual('updated.again.' + nonCQCSite.user.emailAddress.toLowerCase());
+        expect(userChangeHistory.body.email.currentValue).toEqual('updated.again.' + nonCQCSite.user.email.toLowerCase());
         expect(userChangeHistory.body.email.lastChanged).toEqual(new Date(lastSavedDate).toISOString());                             // lastChanged is equal to the previous last saved
         expect(new Date(userChangeHistory.body.email.lastSaved).getTime()).toBeGreaterThan(new Date(lastSavedDate).getTime());       // most recent last saved greater than the previous last saved
 
@@ -871,7 +871,7 @@ describe("Change User Details", () => {
         // no authorization header
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .send({
-                "email" : nonCQCSite.user.emailAddress
+                "email" : nonCQCSite.user.email
             })
             .expect(401);
 
@@ -879,15 +879,15 @@ describe("Change User Details", () => {
         await apiEndpoint.put(`/user/establishment/${establishmentId+1}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "email" : nonCQCSite.user.emailAddress
+                "email" : nonCQCSite.user.email
             })
             .expect(403);
-        
+
         // unexpected UUID/username
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent('06a3c9ca-533c-4260-9563-8b9dadd480c6')}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "email" : nonCQCSite.user.emailAddress
+                "email" : nonCQCSite.user.email
             })
             .expect(404);
 
@@ -965,7 +965,7 @@ describe("Change User Details", () => {
             },
             6);
         let lastSavedDate = userChangeHistory.body.phone.lastSaved;
-        
+
         // now update the property but with same value - expect no change
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
@@ -986,7 +986,7 @@ describe("Change User Details", () => {
         // no authorization header
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .send({
-                "phone" : nonCQCSite.user.contactNumber
+                "phone" : nonCQCSite.user.phone
             })
             .expect(401);
 
@@ -994,15 +994,15 @@ describe("Change User Details", () => {
         await apiEndpoint.put(`/user/establishment/${establishmentId+1}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "phone" : nonCQCSite.user.contactNumber
+                "phone" : nonCQCSite.user.phone
             })
             .expect(403);
-        
+
         // unexpected UUID/username
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent('06a3c9ca-533c-4260-9563-8b9dadd480c6')}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "phone" : nonCQCSite.user.contactNumber
+                "phone" : nonCQCSite.user.phone
             })
             .expect(404);
 
@@ -1066,7 +1066,7 @@ describe("Change User Details", () => {
             },
             6);
         let lastSavedDate = userChangeHistory.body.securityQuestion.lastSaved;
-        
+
         // now update the property but with same value - expect no change
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
@@ -1098,7 +1098,7 @@ describe("Change User Details", () => {
                 "securityQuestion" : nonCQCSite.user.securityQuestion
             })
             .expect(403);
-        
+
         // unexpected UUID/username
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent('06a3c9ca-533c-4260-9563-8b9dadd480c6')}`)
             .set('Authorization', loginAuthToken)
@@ -1121,7 +1121,7 @@ describe("Change User Details", () => {
         const updatedSecurityQuestionAnswerResponse = await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "securityQuestionAnswer" : nonCQCSite.user.securityAnswer + ' updated'
+                "securityQuestionAnswer" : nonCQCSite.user.securityQuestionAnswer + ' updated'
             })
             .expect('Content-Type', /json/)
             .expect(200);
@@ -1130,14 +1130,14 @@ describe("Change User Details", () => {
         expect(updatedSecurityQuestionAnswerResponse.body.created).toEqual(new Date(updatedSecurityQuestionAnswerResponse.body.created).toISOString());
         expect(updatedSecurityQuestionAnswerResponse.body.updated).toEqual(new Date(updatedSecurityQuestionAnswerResponse.body.updated).toISOString());
         expect(updatedSecurityQuestionAnswerResponse.body.updatedBy).toEqual(nonCQCSite.user.username.toLowerCase());
-        expect(updatedSecurityQuestionAnswerResponse.body.securityQuestionAnswer).toEqual(nonCQCSite.user.securityAnswer + ' updated');
+        expect(updatedSecurityQuestionAnswerResponse.body.securityQuestionAnswer).toEqual(nonCQCSite.user.securityQuestionAnswer + ' updated');
 
         //validatePropertyChangeHistory
         // and now check change history
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "securityQuestionAnswer" : nonCQCSite.user.securityAnswer + ' updated again'
+                "securityQuestionAnswer" : nonCQCSite.user.securityQuestionAnswer + ' updated again'
             })
             .expect('Content-Type', /json/)
             .expect(200);
@@ -1159,8 +1159,8 @@ describe("Change User Details", () => {
             'securityQuestionAnswer',
             PropertiesResponses,
             userChangeHistory.body.securityQuestionAnswer,
-            nonCQCSite.user.securityAnswer + ' updated again',
-            nonCQCSite.user.securityAnswer + ' updated',
+            nonCQCSite.user.securityQuestionAnswer + ' updated again',
+            nonCQCSite.user.securityQuestionAnswer + ' updated',
             nonCQCSite.user.username,
             requestEpoch,
             (ref, given) => {
@@ -1168,12 +1168,12 @@ describe("Change User Details", () => {
             },
             6);
         let lastSavedDate = userChangeHistory.body.securityQuestionAnswer.lastSaved;
-        
+
         // now update the property but with same value - expect no change
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "securityQuestionAnswer" : nonCQCSite.user.securityAnswer + ' updated again'
+                "securityQuestionAnswer" : nonCQCSite.user.securityQuestionAnswer + ' updated again'
             })
             .expect('Content-Type', /json/)
             .expect(200);
@@ -1181,7 +1181,7 @@ describe("Change User Details", () => {
             .set('Authorization', loginAuthToken)
             .expect('Content-Type', /json/)
             .expect(200);
-        expect(userChangeHistory.body.securityQuestionAnswer.currentValue).toEqual(nonCQCSite.user.securityAnswer + ' updated again');
+        expect(userChangeHistory.body.securityQuestionAnswer.currentValue).toEqual(nonCQCSite.user.securityQuestionAnswer + ' updated again');
         expect(userChangeHistory.body.securityQuestionAnswer.lastChanged).toEqual(new Date(lastSavedDate).toISOString());                             // lastChanged is equal to the previous last saved
         expect(new Date(userChangeHistory.body.securityQuestionAnswer.lastSaved).getTime()).toBeGreaterThan(new Date(lastSavedDate).getTime());       // most recent last saved greater than the previous last saved
 
@@ -1189,7 +1189,7 @@ describe("Change User Details", () => {
         // no authorization header
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent(knownUserUid)}`)
             .send({
-                "securityQuestionAnswer" : nonCQCSite.user.securityAnswer
+                "securityQuestionAnswer" : nonCQCSite.user.securityQuestionAnswer
             })
             .expect(401);
 
@@ -1197,15 +1197,15 @@ describe("Change User Details", () => {
         await apiEndpoint.put(`/user/establishment/${establishmentId+1}/${encodeURIComponent(knownUserUid)}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "securityQuestionAnswer" : nonCQCSite.user.securityAnswer
+                "securityQuestionAnswer" : nonCQCSite.user.securityQuestionAnswer
             })
             .expect(403);
-        
+
         // unexpected UUID/username
         await apiEndpoint.put(`/user/establishment/${establishmentUid}/${encodeURIComponent('06a3c9ca-533c-4260-9563-8b9dadd480c6')}`)
             .set('Authorization', loginAuthToken)
             .send({
-                "securityQuestionAnswer" : nonCQCSite.user.securityAnswer
+                "securityQuestionAnswer" : nonCQCSite.user.securityQuestionAnswer
             })
             .expect(404);
 
@@ -1382,7 +1382,7 @@ describe("Change User Details", () => {
         });
         expect(allSavedEvents.length).toEqual(0);
     });
- 
+
     it.skip('should register (part add) new user against existing establishment', async () => {
         // first login with a user account having "Edit" role to get the Authorization header and establishment id
 
@@ -1441,16 +1441,16 @@ describe("Change User Details", () => {
         // 7. Duplicate username - is covered in next test case
 
         // and now having completed upon the registration, expect failure (403) on trying reuse (revalidate) the add user UUID
-        
+
     });
 
     it.skip('should safely rollback new user on duplicate username', async () => {
         // duplicate username (which will incur a rollback)
         // first register another new user, and validate that new user request and then try to add with duplicate username
-        
+
         // immediately following the failure, validate the add user UUID - should still pass (because it's not completed)
 
-        // immediately following the failure, 
+        // immediately following the failure,
 
     });
 
@@ -1502,7 +1502,7 @@ describe("Change User Details", () => {
 
         // in both cases, update on role - expect on response to show no succes
 
-        
+
         // now login as read only user
         //  and expect to fail (HTTP 403 - unauthorised) when trying to update another user
 
@@ -1513,7 +1513,7 @@ describe("Change User Details", () => {
 
         // but the role is a User property
     });
-    
+
 
     it("should report on response times", () => {
         const properties = Object.keys(PropertiesResponses);
